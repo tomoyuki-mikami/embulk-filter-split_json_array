@@ -1,0 +1,29 @@
+in:
+  type: file
+  path_prefix: example/data1.json
+  parser:
+    type: json
+    columns:
+      - {name: id, type: long}
+      - {name: title, type: string}
+      - {name: updated_at, type: timestamp, format: "%Y-%m-%d %H:%M:%S %z", timezone: "JST" }
+      - {name: data, type: json}
+
+filters:
+  - type: expand_json
+    json_column_name: record
+    expanded_columns:
+      - {name: "id", type: long }
+      - {name: "title", type: string }
+      - {name: "updated_at", type: timestamp, format: "%Y-%m-%d %H:%M:%S %z", timezone: "JST" }
+      - {name: "data", type: json }
+  - type: split_json_array
+    json_array_column: data
+    is_key_value_array: true
+    array_columns:
+      - { name: number, type: long }
+      - { name: message, type: string }
+      - { name: created_at, type: timestamp, format: "%Y-%m-%d %H:%M:%S %z", timezone: "JST" }
+
+out:
+  type: stdout

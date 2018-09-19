@@ -17,15 +17,11 @@ filters:
       - {name: "title", type: string }
       - {name: "updated_at", type: timestamp, format: "%Y-%m-%d %H:%M:%S %z", timezone: "JST" }
       - {name: "data.task.complete_task_ids", type: json }
-#      - {name: "data", type: json }
   - type: split_json_array
     json_array_column: data.task.complete_task_ids
-#    json_array_column: data
     is_key_value_array: false
     array_columns:
       - { name: complete_task_ids, type: long }
-#      - { name: message, type: string }
-#      - { name: created_at, type: timestamp, format: "%Y-%m-%d %H:%M:%S %z", timezone: "JST" }
 
 out:
   type: stdout
